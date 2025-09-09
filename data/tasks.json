@@ -1,44 +1,46 @@
 {
   "month": "September 2025",
   "history": [
-    { "name": "July 2025", "total": 15, "completed": 8 },
-    { "name": "August 2025", "total": 20, "completed": 13 }
+    { "name": "May 2025", "total": 5, "completed": 5 },
+    { "name": "June 2025", "total": 12, "completed": 6},
+    { "name": "July 2025", "total": 20, "completed": 14 },
+    { "name": "August 2025", "total": 20 , "completed": 12 }
   ],
   "verticals": {
     "Engine": {
-      "total": 12,
-      "completed": 8,
+      "total": 18,
+      "completed": 0,
       "tasks": [
-        "1D cycle matching & fan map",
-        "Centrifugal compressor CAD",
-        "Combustor TPMS liner prototype"
+        "Literature Review for Combustion Chamber",
+        "Literature Review for Fuel Injector",
+        "Literature Review for Thermal Liner"
       ]
     },
     "Structures and Supports": {
-      "total": 7,
-      "completed": 4,
+      "total": 14,
+      "completed": 0,
       "tasks": [
-        "Inner core housing layout",
-        "Shaft support bearings spec",
-        "Mounting brackets geometry"
+        "Designing Starter Motor",
+        "Designing Nozzle",
+        "Designing Exhaust Cone"
       ]
     },
     "Telemetry and Controls": {
-      "total": 5,
-      "completed": 2,
+      "total": 20,
+      "completed": 0,
       "tasks": [
-        "DAQ wiring & sensor list",
-        "ESP32 telemetry firmware",
-        "RPM & RTD sensor calibration"
+        "Finding Pressure Transducer(Post Compressor)",
+        "Finding Pressure Transducer(Tank)",
+        "Finding Pressure Transducer(Post Combustor)"
       ]
     },
     "Digital Twin": {
-      "total": 6,
-      "completed": 3,
+      "total": 14,
+      "completed": 0,
       "tasks": [
-        "Mechanism model (1D) draft",
-        "Data pipeline design for DAQ",
-        "PSO-XGBoost baseline script"
+        "Literature Review for Gas Path Analysis",
+        "Literature Review for Non-Linear GPA",
+        "Literature Review for Data Filters"
       ]
     }
   }
