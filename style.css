@@ -24,8 +24,8 @@ h2 {
   line-height: 28px;
 }
 
-.engine     { background: #4CAF50; }   /* green */
-.digitaltwin{ background: #9C27B0; }   /* purple */
-.telemetry  { background: #2196F3; }   /* blue */
-.structures { background: #FF9800; }   /* orange */
-.overall    { background: #333; }      /* black */
+.engine     { background: #2C5282; }   /* Dark Steel Blue */
+.digitaltwin{ background: #6B46C1; }   /* Deep Purple */
+.telemetry  { background: #2F855A; }   /* Teal Green */
+.structures { background: #DD6B20; }   /* Burnt Orange */
+.overall    { background: #1A202C; }   /* Charcoal Gray */
