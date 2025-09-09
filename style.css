@@ -1,0 +1,31 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f8f9fa;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.progress-container {
+  width: 80%;
+  background: #eee;
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 28px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  line-height: 28px;
+}
+
+.engine     { background: #4CAF50; }   /* green */
+.digitaltwin{ background: #9C27B0; }   /* purple */
+.telemetry  { background: #2196F3; }   /* blue */
+.structures { background: #FF9800; }   /* orange */
+.overall    { background: #333; }      /* black */
