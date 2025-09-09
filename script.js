@@ -3,26 +3,16 @@ async function loadData() {
   return resp.json();
 }
 
-function calcStats(tasks) {
-  const total = tasks.length;
-  const completed = tasks.filter(t => t.status === "done").length;
-  return { total, completed };
-}
-
 function percent(completed, total) {
   return total ? (completed / total) * 100 : 0;
 }
 
 function taskListHTML(tasks) {
-  return tasks.slice(0, 3).map(t => `
-    <li>
-      <span class="task-title">${t.title}</span>
-      <span class="task-status">${t.status}</span>
-    </li>
-  `).join("");
+  return tasks.map(t => `<li><span class="task-title">${t}</span></li>`).join("");
 }
 
-function buildVerticalCard(name, pct, tasks, cls) {
+function buildVerticalCard(name, total, completed, tasks, cls) {
+  const pct = percent(completed, total);
   return `
     <div class="card vertical-card">
       <h3>${name}</h3>
@@ -31,9 +21,8 @@ function buildVerticalCard(name, pct, tasks, cls) {
           <span>${pct.toFixed(1)}%</span>
         </div>
       </div>
-      <ul class="task-list">
-        ${taskListHTML(tasks)}
-      </ul>
+      <p class="kpi">${completed} / ${total} tasks completed</p>
+      <ul class="task-list">${taskListHTML(tasks)}</ul>
     </div>
   `;
 }
@@ -41,22 +30,40 @@ function buildVerticalCard(name, pct, tasks, cls) {
 async function render() {
   const data = await loadData();
 
-  // Month
+  // Month badge
   document.getElementById("month-badge").textContent = data.month;
 
-  // Totals
+  // ---- Cumulative (until this month) ----
   let total = 0, completed = 0;
-  for (let v of Object.values(data.verticals)) {
-    const stats = calcStats(v.tasks);
-    total += stats.total;
-    completed += stats.completed;
-  }
-  const overallPct = percent(completed, total);
-  document.querySelector(".progress-bar.overall").style.setProperty("--target-width", `${overallPct}%`);
-  document.querySelector(".progress-bar.overall span").textContent = `${overallPct.toFixed(1)}%`;
-  document.getElementById("cumulative-text").textContent = `${completed} / ${total} tasks completed`;
 
-  // Flow
+  // Add all history
+  if (data.history) {
+    data.history.forEach(m => {
+      total += m.total;
+      completed += m.completed;
+    });
+  }
+
+  // Add current month totals
+  for (let v of Object.values(data.verticals)) {
+    total += v.total;
+    completed += v.completed;
+  }
+
+  const overallPct = percent(completed, total);
+
+  const cumulativeCard = document.querySelector(".cumulative-card");
+  cumulativeCard.innerHTML = `
+    <h2>Cumulative Progress (until ${data.month})</h2>
+    <div class="progress-container">
+      <div class="progress-bar overall" style="--target-width:${overallPct}%">
+        <span>${overallPct.toFixed(1)}%</span>
+      </div>
+    </div>
+    <p class="kpi">${completed} / ${total} tasks completed (all months)</p>
+  `;
+
+  // ---- Flow for current month only ----
   const order = ["Engine", "Structures and Supports", "Telemetry and Controls", "Digital Twin"];
   const flow = document.getElementById("flow");
   flow.innerHTML = "";
@@ -64,10 +71,8 @@ async function render() {
   order.forEach(name => {
     const v = data.verticals[name];
     if (!v) return;
-    const stats = calcStats(v.tasks);
-    const pct = percent(stats.completed, stats.total);
     const cls = name.toLowerCase().replace(/\s+/g, "");
-    flow.innerHTML += buildVerticalCard(name, pct, v.tasks, cls);
+    flow.innerHTML += buildVerticalCard(name, v.total, v.completed, v.tasks, cls);
   });
 }
 
