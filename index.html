@@ -7,47 +7,32 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand">
-      <!-- small engine-like icon (simple SVG) -->
-      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <circle cx="12" cy="12" r="10" fill="#2C5282"/>
-        <path d="M6 12h12" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M8 9v6" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M16 9v6" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
-      </svg>
-      <div>
-        <h1>Project Arka</h1>
-        <p class="subtitle">UHBR Turbofan — Team Tracker</p>
-      </div>
+  <header>
+    <div>
+      <h1>Project Arka</h1>
+      <p class="subtitle">UHBR Turbofan — Team Tracker</p>
     </div>
-
-    <!-- Month badge populated by script -->
-    <div id="month-badge" class="month-badge" aria-live="polite"></div>
+    <div id="month-badge" class="month-badge"></div>
   </header>
 
   <main class="container">
-    <!-- Cumulative progress card -->
-    <section id="cumulative" class="card cumulative-card" aria-label="Cumulative project progress">
-      <div class="card-header">
-        <h2>Cumulative Progress</h2>
-        <small class="kpi" id="kpi-text"></small>
-      </div>
+    <!-- Cumulative progress -->
+    <section class="card cumulative-card">
+      <h2>Cumulative Progress</h2>
       <div class="progress-container">
-        <div class="progress-bar overall" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="--target-width:0%">
-          <span class="progress-label">0%</span>
+        <div class="progress-bar overall" style="--target-width:0%">
+          <span>0%</span>
         </div>
       </div>
+      <p id="cumulative-text" class="kpi"></p>
     </section>
 
-    <!-- Flow area: Engine -> Structures -> Telemetry -> Digital Twin -->
-    <section class="flow" id="flow" aria-label="Engine firing flow of verticals">
-      <!-- JS will inject vertical cards here in the desired order -->
-    </section>
+    <!-- Engine firing flow -->
+    <section class="flow" id="flow"></section>
   </main>
 
   <footer class="footer">
-    <small>Update <code>data/tasks.json</code> to change tasks / progress • Hosted via GitHub Pages</small>
+    <small>Update <code>data/tasks.json</code> to modify progress • Hosted on GitHub Pages</small>
   </footer>
 
   <script src="script.js"></script>
