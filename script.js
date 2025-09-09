@@ -3,38 +3,48 @@ async function loadProgress() {
   const data = await response.json();
 
   const section = document.getElementById("progress-section");
-  section.innerHTML = `<h3>${data.month}</h3>`;
 
+  // Cumulative bar on top
   let totalTasks = 0, totalCompleted = 0;
-
-  // Loop through verticals
-  for (let [name, stats] of Object.entries(data.verticals)) {
-    let percent = (stats.completed / stats.total) * 100;
+  for (let stats of Object.values(data.verticals)) {
     totalTasks += stats.total;
     totalCompleted += stats.completed;
+  }
+  let overall = (totalCompleted / totalTasks) * 100;
 
-    // Generate class names without spaces (& lowercased)
+  section.innerHTML = `
+    <div class="card" style="animation-delay:0s">
+      <p><strong>Cumulative Project Progress</strong></p>
+      <div class="progress-container">
+        <div class="progress-bar overall" style="--target-width:${overall}%; animation-delay:0.2s">
+          ${overall.toFixed(1)}%
+        </div>
+      </div>
+    </div>
+    <div class="flow"></div>
+  `;
+
+  // Flow layout for firing sequence
+  const flow = document.querySelector(".flow");
+
+  const order = ["Engine", "Structures and Supports", "Telemetry and Controls", "Digital Twin"];
+  order.forEach((name, idx) => {
+    const stats = data.verticals[name];
+    let percent = (stats.completed / stats.total) * 100;
     let className = name.toLowerCase().replace(/\s+/g, '');
 
-    section.innerHTML += `
-      <p><strong>${name}</strong></p>
-      <div class="progress-container">
-        <div class="progress-bar ${className}" style="width:${percent}%">
-          ${percent.toFixed(1)}%
+    flow.innerHTML += `
+      <div class="card" style="animation-delay:${0.3 + idx*0.3}s">
+        <p><strong>${name}</strong></p>
+        <div class="progress-container">
+          <div class="progress-bar ${className}" 
+               style="--target-width:${percent}%; animation-delay:${0.5 + idx*0.3}s">
+            ${percent.toFixed(1)}%
+          </div>
         </div>
       </div>
     `;
-  }
-
-  // Add cumulative bar
-  let overall = (totalCompleted / totalTasks) * 100;
-  section.innerHTML =
-    `<p><strong>Cumulative Project Progress</strong></p>
-     <div class="progress-container">
-       <div class="progress-bar overall" style="width:${overall}%">
-         ${overall.toFixed(1)}%
-       </div>
-     </div>` + section.innerHTML;
+  });
 }
 
 loadProgress();
