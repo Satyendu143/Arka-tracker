@@ -2,10 +2,11 @@ async function loadProgress() {
   const response = await fetch("data/tasks.json");
   const data = await response.json();
 
-  const section = document.getElementById("progress-section");
+  // Month badge
+  document.getElementById("month").innerHTML =
+    `<div class="month-badge">${data.month}</div>`;
 
-  // Add month header dynamically
-  section.innerHTML = `<h3>${data.month}</h3>`;
+  const section = document.getElementById("progress-section");
 
   // Calculate cumulative
   let totalTasks = 0, totalCompleted = 0;
@@ -16,7 +17,7 @@ async function loadProgress() {
   let overall = (totalCompleted / totalTasks) * 100;
 
   // Add cumulative card
-  section.innerHTML += `
+  section.innerHTML = `
     <div class="card" style="animation-delay:0s">
       <p><strong>Cumulative Project Progress</strong></p>
       <div class="progress-container">
@@ -28,10 +29,9 @@ async function loadProgress() {
     <div class="flow"></div>
   `;
 
-  // Flow layout (engine firing order)
+  // Flow layout
   const flow = document.querySelector(".flow");
 
-  // ✅ These names must EXACTLY match your tasks.json keys
   const order = [
     "Engine",
     "Structures and Supports",
@@ -41,9 +41,14 @@ async function loadProgress() {
 
   order.forEach((name, idx) => {
     const stats = data.verticals[name];
-    if (!stats) return; // skip if not found
+    if (!stats) return;
     let percent = (stats.completed / stats.total) * 100;
     let className = name.toLowerCase().replace(/\s+/g, '');
+
+    // Build task list
+    const taskItems = stats.tasks
+      .map(task => `<li>• ${task}</li>`)
+      .join("");
 
     flow.innerHTML += `
       <div class="card" style="animation-delay:${0.3 + idx*0.3}s">
@@ -54,8 +59,10 @@ async function loadProgress() {
             ${percent.toFixed(1)}%
           </div>
         </div>
+        <ul class="task-list">${taskItems}</ul>
       </div>
     `;
   });
 }
+
 loadProgress();
