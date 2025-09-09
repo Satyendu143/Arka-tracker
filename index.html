@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div>
       <h1>Project Arka</h1>
@@ -15,9 +16,11 @@
     <div id="month-badge" class="month-badge"></div>
   </header>
 
+  <!-- Main -->
   <main class="container">
-    <!-- Cumulative progress -->
+    <!-- Cumulative progress (until this month) -->
     <section class="card cumulative-card">
+      <!-- JS will overwrite this content -->
       <h2>Cumulative Progress</h2>
       <div class="progress-container">
         <div class="progress-bar overall" style="--target-width:0%">
@@ -25,16 +28,22 @@
         </div>
       </div>
       <p id="cumulative-text" class="kpi"></p>
+      <!-- Placeholder for history table (month by month) -->
+      <div id="history"></div>
     </section>
 
-    <!-- Engine firing flow -->
+    <!-- Engine firing flow (current month verticals only) -->
     <section class="flow" id="flow"></section>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
-    <small>Update <code>data/tasks.json</code> to modify progress • Hosted on GitHub Pages</small>
+    <small>
+      Update <code>data/tasks.json</code> to modify progress • Hosted on GitHub Pages
+    </small>
   </footer>
 
+  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
