@@ -1,33 +1,44 @@
 {
   "month": "September 2025",
+  "history": [
+    { "name": "July 2025", "total": 15, "completed": 8 },
+    { "name": "August 2025", "total": 20, "completed": 13 }
+  ],
   "verticals": {
     "Engine": {
+      "total": 12,
+      "completed": 8,
       "tasks": [
-        { "title": "1D cycle matching & fan map", "status": "done" },
-        { "title": "Centrifugal compressor CAD", "status": "inprogress" },
-        { "title": "Combustor TPMS liner prototype", "status": "todo" },
-        { "title": "Iris nozzle mechanical design", "status": "todo" }
+        "1D cycle matching & fan map",
+        "Centrifugal compressor CAD",
+        "Combustor TPMS liner prototype"
       ]
     },
     "Structures and Supports": {
+      "total": 7,
+      "completed": 4,
       "tasks": [
-        { "title": "Inner core housing layout", "status": "inprogress" },
-        { "title": "Shaft support bearings spec", "status": "todo" },
-        { "title": "Mounting brackets geometry", "status": "done" }
+        "Inner core housing layout",
+        "Shaft support bearings spec",
+        "Mounting brackets geometry"
       ]
     },
     "Telemetry and Controls": {
+      "total": 5,
+      "completed": 2,
       "tasks": [
-        { "title": "DAQ wiring & sensor list", "status": "done" },
-        { "title": "ESP32 telemetry firmware", "status": "inprogress" },
-        { "title": "RPM & RTD sensor calibration", "status": "todo" }
+        "DAQ wiring & sensor list",
+        "ESP32 telemetry firmware",
+        "RPM & RTD sensor calibration"
       ]
     },
     "Digital Twin": {
+      "total": 6,
+      "completed": 3,
       "tasks": [
-        { "title": "Mechanism model (1D) draft", "status": "inprogress" },
-        { "title": "Data pipeline design for DAQ", "status": "todo" },
-        { "title": "PSO-XGBoost baseline script", "status": "todo" }
+        "Mechanism model (1D) draft",
+        "Data pipeline design for DAQ",
+        "PSO-XGBoost baseline script"
       ]
     }
   }
