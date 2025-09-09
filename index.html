@@ -1,18 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Project Arka – Task Tracker</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Arka — Tracker</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>🚀 Project Arka – Task Progress</h2>
+  <header class="site-header">
+    <div class="brand">
+      <!-- small engine-like icon (simple SVG) -->
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <circle cx="12" cy="12" r="10" fill="#2C5282"/>
+        <path d="M6 12h12" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M8 9v6" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M16 9v6" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h1>Project Arka</h1>
+        <p class="subtitle">UHBR Turbofan — Team Tracker</p>
+      </div>
+    </div>
 
-  <!-- Month badge will appear here -->
-  <div id="month"></div>
+    <!-- Month badge populated by script -->
+    <div id="month-badge" class="month-badge" aria-live="polite"></div>
+  </header>
 
-  <!-- All progress content loads here -->
-  <div id="progress-section"></div>
+  <main class="container">
+    <!-- Cumulative progress card -->
+    <section id="cumulative" class="card cumulative-card" aria-label="Cumulative project progress">
+      <div class="card-header">
+        <h2>Cumulative Progress</h2>
+        <small class="kpi" id="kpi-text"></small>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar overall" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="--target-width:0%">
+          <span class="progress-label">0%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flow area: Engine -> Structures -> Telemetry -> Digital Twin -->
+    <section class="flow" id="flow" aria-label="Engine firing flow of verticals">
+      <!-- JS will inject vertical cards here in the desired order -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Update <code>data/tasks.json</code> to change tasks / progress • Hosted via GitHub Pages</small>
+  </footer>
 
   <script src="script.js"></script>
 </body>
