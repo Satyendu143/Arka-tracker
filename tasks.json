@@ -1,0 +1,9 @@
+{
+  "month": "September 2025",
+  "verticals": {
+    "Engine": { "total": 12, "completed": 8 },
+    "Digital Twin": { "total": 6, "completed": 3 },
+    "Telemetry and Controls": { "total": 5, "completed": 2 },
+    "Structures and Supports": { "total": 7, "completed": 4 }
+  }
+}
