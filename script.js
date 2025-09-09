@@ -1,68 +1,74 @@
-async function loadProgress() {
-  const response = await fetch("data/tasks.json");
-  const data = await response.json();
+async function loadData() {
+  const resp = await fetch("data/tasks.json", { cache: "no-store" });
+  return resp.json();
+}
 
-  // Month badge
-  document.getElementById("month").innerHTML =
-    `<div class="month-badge">${data.month}</div>`;
+function calcStats(tasks) {
+  const total = tasks.length;
+  const completed = tasks.filter(t => t.status === "done").length;
+  return { total, completed };
+}
 
-  const section = document.getElementById("progress-section");
+function percent(completed, total) {
+  return total ? (completed / total) * 100 : 0;
+}
 
-  // Calculate cumulative
-  let totalTasks = 0, totalCompleted = 0;
-  for (let stats of Object.values(data.verticals)) {
-    totalTasks += stats.total;
-    totalCompleted += stats.completed;
-  }
-  let overall = (totalCompleted / totalTasks) * 100;
+function taskListHTML(tasks) {
+  return tasks.slice(0, 3).map(t => `
+    <li>
+      <span class="task-title">${t.title}</span>
+      <span class="task-status">${t.status}</span>
+    </li>
+  `).join("");
+}
 
-  // Add cumulative card
-  section.innerHTML = `
-    <div class="card" style="animation-delay:0s">
-      <p><strong>Cumulative Project Progress</strong></p>
+function buildVerticalCard(name, pct, tasks, cls) {
+  return `
+    <div class="card vertical-card">
+      <h3>${name}</h3>
       <div class="progress-container">
-        <div class="progress-bar overall" style="--target-width:${overall}%; animation-delay:0.2s">
-          ${overall.toFixed(1)}%
+        <div class="progress-bar ${cls}" style="--target-width:${pct}%">
+          <span>${pct.toFixed(1)}%</span>
         </div>
       </div>
+      <ul class="task-list">
+        ${taskListHTML(tasks)}
+      </ul>
     </div>
-    <div class="flow"></div>
   `;
+}
 
-  // Flow layout
-  const flow = document.querySelector(".flow");
+async function render() {
+  const data = await loadData();
 
-  const order = [
-    "Engine",
-    "Structures and Supports",
-    "Telemetry and Controls",
-    "Digital Twin"
-  ];
+  // Month
+  document.getElementById("month-badge").textContent = data.month;
 
-  order.forEach((name, idx) => {
-    const stats = data.verticals[name];
-    if (!stats) return;
-    let percent = (stats.completed / stats.total) * 100;
-    let className = name.toLowerCase().replace(/\s+/g, '');
+  // Totals
+  let total = 0, completed = 0;
+  for (let v of Object.values(data.verticals)) {
+    const stats = calcStats(v.tasks);
+    total += stats.total;
+    completed += stats.completed;
+  }
+  const overallPct = percent(completed, total);
+  document.querySelector(".progress-bar.overall").style.setProperty("--target-width", `${overallPct}%`);
+  document.querySelector(".progress-bar.overall span").textContent = `${overallPct.toFixed(1)}%`;
+  document.getElementById("cumulative-text").textContent = `${completed} / ${total} tasks completed`;
 
-    // Build task list
-    const taskItems = stats.tasks
-      .map(task => `<li>• ${task}</li>`)
-      .join("");
+  // Flow
+  const order = ["Engine", "Structures and Supports", "Telemetry and Controls", "Digital Twin"];
+  const flow = document.getElementById("flow");
+  flow.innerHTML = "";
 
-    flow.innerHTML += `
-      <div class="card" style="animation-delay:${0.3 + idx*0.3}s">
-        <p><strong>${name}</strong></p>
-        <div class="progress-container">
-          <div class="progress-bar ${className}" 
-               style="--target-width:${percent}%; animation-delay:${0.5 + idx*0.3}s">
-            ${percent.toFixed(1)}%
-          </div>
-        </div>
-        <ul class="task-list">${taskItems}</ul>
-      </div>
-    `;
+  order.forEach(name => {
+    const v = data.verticals[name];
+    if (!v) return;
+    const stats = calcStats(v.tasks);
+    const pct = percent(stats.completed, stats.total);
+    const cls = name.toLowerCase().replace(/\s+/g, "");
+    flow.innerHTML += buildVerticalCard(name, pct, v.tasks, cls);
   });
 }
 
-loadProgress();
+render();
