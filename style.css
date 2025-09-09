@@ -1,31 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background: #f8f9fa;
+  font-family: 'Inter', sans-serif;
+  background: #0f172a; /* dark navy for engine vibe */
+  color: #f8fafc;
+  padding: 40px;
+  text-align: center;
 }
 
+/* Header */
 h2 {
+  font-size: 28px;
   margin-bottom: 20px;
+  font-weight: 600;
+  color: #f1f5f9;
 }
 
+/* Card Style */
+.card {
+  background: #1e293b;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  padding: 20px;
+  margin: 15px;
+  flex: 1;
+  min-width: 200px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+/* Layout (horizontal firing sequence) */
+.flow {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+/* Progress Container */
 .progress-container {
-  width: 80%;
-  background: #eee;
+  width: 100%;
+  background: #334155;
   border-radius: 10px;
-  margin: 10px 0;
+  margin: 12px 0;
   overflow: hidden;
 }
 
+/* Animated Progress Bar */
 .progress-bar {
   height: 28px;
   text-align: center;
   color: white;
-  font-weight: bold;
+  font-weight: 600;
   line-height: 28px;
+  border-radius: 10px 0 0 10px;
+  width: 0;
+  animation: fillBar 2s ease forwards;
 }
 
-.engine     { background: #2C5282; }   /* Dark Steel Blue */
-.digitaltwin{ background: #6B46C1; }   /* Deep Purple */
-.telemetry  { background: #2F855A; }   /* Teal Green */
-.structures { background: #DD6B20; }   /* Burnt Orange */
-.overall    { background: #1A202C; }   /* Charcoal Gray */
+/* Colors */
+.engine     { background: linear-gradient(90deg, #2B6CB0, #2C5282); }
+.structures { background: linear-gradient(90deg, #ED8936, #DD6B20); }
+.telemetry  { background: linear-gradient(90deg, #38A169, #2F855A); }
+.digitaltwin{ background: linear-gradient(90deg, #805AD5, #6B46C1); }
+.overall    { background: linear-gradient(90deg, #2D3748, #1A202C); }
+
+/* Animations */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fillBar {
+  from { width: 0; }
+  to { width: var(--target-width); }
+}
